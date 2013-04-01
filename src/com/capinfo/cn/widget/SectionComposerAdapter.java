@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.capinfo.cn.Person;
+import com.capinfo.myslidingmenu.UserInfo;
 import com.example.myslidingmenu2.R;
 
 public class SectionComposerAdapter extends SpellHeaderAdapter implements OnClickListener{
@@ -198,6 +199,8 @@ public class SectionComposerAdapter extends SpellHeaderAdapter implements OnClic
 			call(person.getPhoneNum());
 			break;
 		case R.id.item_inDetail:
+			Intent it = new Intent(context, UserInfo.class);
+			context.startActivity(it);
 
 			break;
 

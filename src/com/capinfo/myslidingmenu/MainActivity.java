@@ -19,6 +19,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,7 @@ import com.capinfo.myslidingmenu.view.MySlidingMenuView;
 import com.example.myslidingmenu2.R;
 
 /**
+ * 菜單欄適配器
  * @author Gongcong
  * 
  */
@@ -46,6 +48,8 @@ public class MainActivity extends Activity implements OnClickListener,
 	private MySlidingMenuView slidingMenu;
 	boolean isExit;
 	ListView list1;
+	ImageView img2;
+	ListView menu_listview;
 	PinnedHeaderListView headerListView; // Diy ListView
 	SectionComposerAdapter adapter; // 适配器
 	MySideBar myView;
@@ -76,6 +80,7 @@ public class MainActivity extends Activity implements OnClickListener,
 		ListView menu_listview = (ListView) findViewById(R.id.menu_listView);		
 		SettingAdapter settingadapter = new SettingAdapter(this,title);
 		menu_listview.setAdapter(settingadapter);
+	    //ImageView img = (ImageView)findViewById(R.id.img2);
 		//设置listview的宽度
 		setListViewWidthBaseOnChildren(menu_listview);
 		myView = (MySideBar) findViewById(R.id.myView);
@@ -85,6 +90,27 @@ public class MainActivity extends Activity implements OnClickListener,
 		Button showmenu = (Button) myAs.findViewById(R.id.showmenu);
 		showmenu.setOnClickListener(this);
 
+		menu_listview.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				switch (position) {
+				case 0:
+					Toast.makeText(getApplicationContext(),String.valueOf(position), Toast.LENGTH_LONG).show();
+					break;
+					
+				case 5:
+					
+					break;
+				default:
+					break;
+				}
+			}
+		});
+		
+		
 		// 测试数据
 		List<Person> persons = new ArrayList<Person>();
 		persons.add(new Person("啊", "123", "产品研发部", "212", "liu@163.com",
@@ -139,6 +165,7 @@ public class MainActivity extends Activity implements OnClickListener,
 		myAs.setVisibility(View.VISIBLE);// 默认显示第一页
 	}
 
+	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -148,7 +175,6 @@ public class MainActivity extends Activity implements OnClickListener,
 		case R.id.showmenu:
 			slidingMenu.openMenu();
 			break;
-
 		default:
 			break;
 		}
@@ -204,10 +230,11 @@ public class MainActivity extends Activity implements OnClickListener,
 	}
 
 	/**
-	 * 动态设置listview的宽度，此处为屏幕的1/3
+	 * 动态设置listview的宽度
 	 * 
 	 * @param listView
 	 */
+	@SuppressWarnings("deprecation")
 	public void setListViewWidthBaseOnChildren(ListView listView) {
 		ViewGroup.LayoutParams layoutParams = listView.getLayoutParams();
 		layoutParams.width = (int) ((getWindowManager().getDefaultDisplay()
