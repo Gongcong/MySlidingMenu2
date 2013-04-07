@@ -27,16 +27,16 @@ public class FistStart extends Activity{
 
 		pageWidget.SetScreen(width, height);
 
-		Bitmap bm1 = BitmapFactory.decodeResource(getResources(),
-				R.drawable.before);
-		Bitmap bm2 = BitmapFactory.decodeResource(getResources(),
-				R.drawable.after);
+//		Bitmap bm1 = BitmapFactory.decodeResource(getResources(),
+//				R.drawable.before);
+//		Bitmap bm2 = BitmapFactory.decodeResource(getResources(),
+//				R.drawable.after);
 
-		Bitmap foreImage = Bitmap.createScaledBitmap(bm1, width, height, false);
-		Bitmap bgImage = Bitmap.createScaledBitmap(bm2, width, height, false);
+	//	Bitmap foreImage = Bitmap.createScaledBitmap(bm1, width, height, false);
+	//	Bitmap bgImage = Bitmap.createScaledBitmap(bm2, width, height, false);
 
-		pageWidget.setBgImage(bgImage);
-		pageWidget.setForeImage(foreImage);
+	//	pageWidget.setBgImage(bgImage);
+	//	pageWidget.setForeImage(foreImage);
 
 		setContentView(pageWidget);
 		

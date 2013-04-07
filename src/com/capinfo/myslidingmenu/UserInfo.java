@@ -10,16 +10,20 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.capinfo.myslidingmenu.ShakeListener.OnShakeListener;
 import com.example.myslidingmenu2.R;
 
 public class UserInfo extends Activity {
 
 	private RelativeLayout callMobile;
 	private Button sendMMS;
+	private ImageView user_pic;
 	private Float x;
 	private Float ux;
+	ShakeListener mShakeListener = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +34,18 @@ public class UserInfo extends Activity {
 		initData();
 	}
 
+	/**
+	 * 初始化布局
+	 */
 	private void initview() {
 		// TODO Auto-generated method stub
 		callMobile = (RelativeLayout) findViewById(R.id.user_info_mobilenum);
 		sendMMS = (Button) findViewById(R.id.send_mms);
+		user_pic = (ImageView) findViewById(R.id.user_info_userface);
 		callMobile.setOnTouchListener(callMobileTouchListener);
 		sendMMS.setOnClickListener(sendMMSClickListener);
+		  mShakeListener = new ShakeListener(this);
+		  mShakeListener.setOnShakeListener(new shakeLitener());
 	}
 
 	private void initData() {
@@ -44,7 +54,6 @@ public class UserInfo extends Activity {
 	}
 
 	private View.OnTouchListener callMobileTouchListener = new View.OnTouchListener() {
-
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
 			// TODO Auto-generated method stub
@@ -73,6 +82,7 @@ public class UserInfo extends Activity {
 	};
 
 	/**
+	 * 滑动拨打电话动画效果
 	 * @param v
 	 */
 	private void callMobileAnim(View v) {
@@ -81,10 +91,8 @@ public class UserInfo extends Activity {
 		animation.setAnimationListener(new AnimationListener() {
 			public void onAnimationStart(Animation animation) {
 			}
-
 			public void onAnimationRepeat(Animation animation) {
 			}
-
 			public void onAnimationEnd(Animation animation) {
 				animation.cancel();
 			}
@@ -92,5 +100,13 @@ public class UserInfo extends Activity {
 		v.startAnimation(animation);
 
 	}
+	 private class shakeLitener implements OnShakeListener{
+		  @Override
+		  public void onShake() {
+		   // TODO Auto-generated method stub			  
+		   mShakeListener.stop();
+		  }
+		  
+		 }
 
 }

@@ -158,6 +158,7 @@ public class MySlidingMenuView extends ViewGroup {
 			}
 			break;
 		case MotionEvent.ACTION_DOWN:
+			System.out.println("interupter down");
 			lTouchX = x;
 			lTouchY = y;
 			lTouchState = lScroller.isFinished() ? TOUCH_STATE_REST
@@ -168,6 +169,13 @@ public class MySlidingMenuView extends ViewGroup {
 			// Release the drag
 			clearChildrenCache();
 			lTouchState = TOUCH_STATE_REST;
+			//当划开菜单时，点击右边可以关系菜单
+			if (!ismenuclose) {
+				if (x > LEFT_VIEW_WIDTH) {
+				closeMenu();
+				lTouchState = 1;
+				}
+			}
 			break;
 		}
 		return lTouchState != TOUCH_STATE_REST;
@@ -195,13 +203,13 @@ public class MySlidingMenuView extends ViewGroup {
 			// 边缘内向右拉动
 			if (enter && PULL_DIRECTION) {
 				if ((LEFT_VIEW_WIDTH - getScrollX()) >= LEFT_VIEW_WIDTH / 3) {// 可以展开第一页面
-					
+					ismenuclose = false;
 					lTouchUpOffux = 0;
 				} else {// 拉动距离不够，回到第二界面
 					lTouchUpOffux = LEFT_VIEW_WIDTH;
 				}
-				System.out.print("right---"+ismenuclose);
-				ismenuclose = false;
+				System.out.print("right---" + ismenuclose);
+				
 				enter = !enter;
 			}
 
@@ -209,11 +217,12 @@ public class MySlidingMenuView extends ViewGroup {
 			if (enter && !PULL_DIRECTION) {
 				if (getScrollX() >= LEFT_VIEW_WIDTH / 3) {
 					lTouchUpOffux = LEFT_VIEW_WIDTH;
+					ismenuclose = true;
 				} else {
 					lTouchUpOffux = 0;
 				}
-				System.out.print("left---"+ismenuclose);
-				ismenuclose = true;
+				System.out.print("left---" + ismenuclose);
+				
 			}
 			isSlidingState = true;
 			lScroller.startScroll(getScrollX(), 0,
@@ -264,8 +273,8 @@ public class MySlidingMenuView extends ViewGroup {
 				if (!PULL_DIRECTION && getScrollX() + offx > LEFT_VIEW_WIDTH) {
 					offx = LEFT_VIEW_WIDTH - getScrollX();
 				}
-			}			
-			System.out.println("offx="+offx);
+			}
+			System.out.println("offx=" + offx);
 			scrollBy(offx, 0);
 			lTouchX = event.getX();
 

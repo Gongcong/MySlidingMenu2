@@ -3,15 +3,16 @@ package com.capinfo.myslidingmenu;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
+import android.telephony.TelephonyManager;
 import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -35,11 +36,12 @@ import com.capinfo.myslidingmenu.view.MySlidingMenuView;
 import com.example.myslidingmenu2.R;
 
 /**
- * 菜單欄適配器
+ * 
+ * 
  * @author Gongcong
  * 
  */
-public class MainActivity extends Activity implements OnClickListener,
+public class MainActivity extends BaseActivity implements OnClickListener,
 		OnTouchingLetterChangedListener {
 
 	private View myAs = null;// 布局
@@ -56,14 +58,17 @@ public class MainActivity extends Activity implements OnClickListener,
 	List<Pair<String, List<Person>>> all;
 	private TextView select_side_bar_text;
 
-	
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		init();
+
+		TelephonyManager tm = (TelephonyManager) this.getSystemService(TELEPHONY_SERVICE);
+		tm.getDeviceId();
+		     System.out.println("1111="+tm.getDeviceId());
+	     
 
 	}
 
@@ -77,11 +82,11 @@ public class MainActivity extends Activity implements OnClickListener,
 		slidingMenu.setlSlidingMenuState(MySlidingMenuView.SLIDING_MENU_TILE);
 		// 初始化界面布局
 		myAs = findViewById(R.id.SelectDemoActivity);
-		ListView menu_listview = (ListView) findViewById(R.id.menu_listView);		
-		SettingAdapter settingadapter = new SettingAdapter(this,title);
+		ListView menu_listview = (ListView) findViewById(R.id.menu_listView);
+		SettingAdapter settingadapter = new SettingAdapter(this, title);
 		menu_listview.setAdapter(settingadapter);
-	    //ImageView img = (ImageView)findViewById(R.id.img2);
-		//设置listview的宽度
+		// ImageView img = (ImageView)findViewById(R.id.img2);
+		// 设置listview的宽度
 		setListViewWidthBaseOnChildren(menu_listview);
 		myView = (MySideBar) findViewById(R.id.myView);
 		select_side_bar_text = (TextView) findViewById(R.id.select_side_bar_text);
@@ -98,23 +103,22 @@ public class MainActivity extends Activity implements OnClickListener,
 				// TODO Auto-generated method stub
 				switch (position) {
 				case 0:
-					Toast.makeText(getApplicationContext(),String.valueOf(position), Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(),
+							String.valueOf(position), Toast.LENGTH_LONG).show();
 					break;
-					
+
 				case 5:
-					
+
 					break;
 				default:
 					break;
 				}
 			}
 		});
-		
-		
+
 		// 测试数据
 		List<Person> persons = new ArrayList<Person>();
-		persons.add(new Person("啊", "123", "产品研发部", "212", "liu@163.com",
-				"工程师"));
+		persons.add(new Person("啊", "123", "产品研发部", "212", "liu@163.com", "工程师"));
 		persons.add(new Person("王五", "123", "产品研发部", "212", "liu@163.com",
 				"工程师"));
 		persons.add(new Person("赵六", "123", "产品研发部", "212", "liu@163.com",
@@ -165,7 +169,6 @@ public class MainActivity extends Activity implements OnClickListener,
 		myAs.setVisibility(View.VISIBLE);// 默认显示第一页
 	}
 
-	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -200,7 +203,8 @@ public class MainActivity extends Activity implements OnClickListener,
 			Intent intent = new Intent(Intent.ACTION_MAIN);
 			intent.addCategory(Intent.CATEGORY_HOME);
 			startActivity(intent);
-			System.exit(0);
+			//System.exit(0);
+			finish();
 		}
 	}
 
@@ -241,6 +245,13 @@ public class MainActivity extends Activity implements OnClickListener,
 				.getWidth()) * 0.75);
 		System.out.print("width" + layoutParams.width);
 		listView.setLayoutParams(layoutParams);
+	}
+	
+	
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent ev) {
+		// TODO Auto-generated method stub
+		return super.dispatchTouchEvent(ev);
 	}
 
 }

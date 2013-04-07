@@ -105,10 +105,10 @@ public class SettingAdapter extends BaseAdapter {
 					if (event.getAction() == MotionEvent.ACTION_DOWN) {
 						// 更改为按下时的背景图片
 						System.out.println("down");
-						v.setBackgroundResource(R.drawable.after);
+						//v.setBackgroundResource(R.drawable.after);
 					} else if (event.getAction() == MotionEvent.ACTION_UP) {
 						// 改为抬起时的图片
-						v.setBackgroundResource(R.drawable.before);
+						//v.setBackgroundResource(R.drawable.before);
 					}
 
 					return false;
